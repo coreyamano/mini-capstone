@@ -5,6 +5,19 @@ class ProductsController < ApplicationController
   end
 
   def show
-    render json: { message: "hello" }
+    the_id = params[:id]
+    product = Product.find_by(id: the_id)
+    render json: product.as_json
+  end
+
+  def create
+    product = Product.new(
+      name: params[:input_name],
+      price: params[:input_price],
+      image_url: params[:input_url],
+      description: params[:input_description],
+    )
+    product.save
+    render json: product.as_json
   end
 end

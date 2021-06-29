@@ -7,6 +7,8 @@ class Product < ApplicationRecord
 
   belongs_to :supplier
   has_many :images
+  has_many :orders
+
   #def supplier
   #  Supplier.find_by(id: supplier_id)
   #end
@@ -24,7 +26,7 @@ class Product < ApplicationRecord
   end
 
   def total
-    tax + price
+    return tax + price
   end
 
   def date_added

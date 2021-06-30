@@ -1,18 +1,16 @@
 class OrdersController < ApplicationController
+
+  before_action :authenticate_user
+
   def index
-    if current_user
-      orders = Order.all
-      render json: orders.as_json
-    else
-      render json: { message: "user not signed in" }
-    end
+    orders = Order.where(user_id: current_user.id)
+    render json: orders.as_json
   end
 
   def show
     if current_user
-      the_id = params[:id]
-      order = Order.find_by(id: the_id)
-      render json: order
+      order = Order.find_by(id: params[:id], user_id: current_user.id)
+      render json: order.as_json
     else
       render json: { message: "user not signed in" }
     end
@@ -29,6 +27,7 @@ class OrdersController < ApplicationController
       order.subtotal = order.quantity * product.price
       order.tax = order.subtotal * 0.09
       order.total = order.subtotal + order.tax
+
       if order.save
         render json: order.as_json
       else

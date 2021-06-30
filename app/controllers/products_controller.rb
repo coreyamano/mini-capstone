@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     if current_user
       render json: current_user.as_json
@@ -49,6 +51,6 @@ class ProductsController < ApplicationController
     the_id = params[:id]
     product = Product.find_by(id: the_id)
     product.destroy
-    render json: { messge: "you deleted this" }
+    render json: { message: "you deleted this" }
   end
 end

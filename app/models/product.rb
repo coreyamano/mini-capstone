@@ -6,6 +6,7 @@ class Product < ApplicationRecord
   validates :description, length: { in: 10..500 }
 
   belongs_to :supplier
+  belongs_to :carted_product
   has_many :images
   has_many :orders
   has_many :category_products

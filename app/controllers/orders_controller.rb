@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-
   before_action :authenticate_user
 
   def index
@@ -21,7 +20,6 @@ class OrdersController < ApplicationController
       order = Order.new(
         user_id: current_user.id,
         product_id: params[:product_id],
-        quantity: params[:quantity],
       )
       product = Product.find_by(id: order.product_id)
       order.subtotal = order.quantity * product.price
